@@ -1,3 +1,7 @@
 {
-    "name": "atom-voice-server"
+  "name": "atom-voice-server",
+  "author": "alexander sanchez",
+  "dependencies": {
+    "@google-cloud/speech": "^0.9.1"
+  }
 }
