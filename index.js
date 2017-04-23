@@ -19,17 +19,22 @@ const request = {
     }
 };
 
-const recognizeStream = speechClient.createRecognizeStream(request)
-      .on('error', console.error)
-      .on('data', (data) => {
-          process.stdout.write(`${JSON.stringify(data.results)}\n`);
-      });
-
-
 var n = net.createServer((s) => {
+    console.log('hi');
+    const recognizeStream = speechClient.createRecognizeStream(request)
+        .on('error', console.error)
+        .on('data', (data) => {
+            process.stdout.write(`${JSON.stringify(data.results)}\n`);
+            result = data.results;
+            try {
+              s.write(result);
+            } catch(e) {
+              console.log('Slow down');
+            }
+        });
     s.pipe(recognizeStream);
     s.on('close', () => {
-        console.log("Passing to Google");
+        console.log('bye');
     });
 }).listen(PORT, HOST, () => {
     console.log("listening on ", PORT);
